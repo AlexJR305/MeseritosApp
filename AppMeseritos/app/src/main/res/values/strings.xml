@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">AppMeseritos</string>
+    //Home
+    <string name="User">Usuario</string>
+    <string name="Password">Contraseña</string>
+    //Menu
+    <string name="Menu">Menu</string>
+    <string name="Search">Buscar</string>
+    <string name="Checked">Cuenta</string>
+    <string name="Order">Ordenar</string>
+    <string name="Personal">Personal</string>
+    //DetailsFood
+    <string name="DetailsFood">Detalles de la comida</string>
+    <string name="DescriptionFood">Descripcion</string>
+    <string name="HowMany">"¿Cuantas desea pedir?"</string>
+    <string name="Amount">Cantidad</string>
+    <string name="DetailsExtra">Detalles extras</string>
+    <string name="Preferences">A tu gusto</string>
+    //Bill
+    <string name="Bill">Cuenta</string>
+    <string name="Pay">Pagar</string>
+    <string name="CancelBill">Cancelar</string>
+    <string name="Total">Total: </string>
+    <string name="Iva">IVA: </string>
+    //ListToOrders
+    <string name="ListToOrrders">Lista de órdenes</string>
+    <string name="ExitListToOrrders">Salir</string>
+    //Administration
+    <string name="AdministrationText">Administracion</string>
+    <string name="AdministrationPersonal">Personal</string>
+    <string name="AdministrationMenu">Menu</string>
+    <string name="AdministrationExit">Salir</string>
+    //MenuSetting AND PersonnelAdjustments similar
+    <string name="MenuSettingText">Configurar Menu</string>
+    <string name="PersonnelAdjustmentsText">Ajuste de personal</string>
+    <string name="MenuSettingAdd">Agregar</string>
+    <string name="MenuSettingEdit">Editar</string>
+    <string name="MenuSettingDelete">Eliminar</string>
+    //Newfood
+    <string name="AddFood">Nombre</string>
+    <string name="PriceFood">Precio</string>
+    <string name="DescriptionNewFood">Descripcion de la comida</string>
+</resources>
