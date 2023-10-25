@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SupervisorAccount
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -66,6 +67,9 @@ fun MenuSettingScreen(navController: NavController){
 fun DesingMenuSetting(navController: NavController){
     //Variables
     var Search by remember{ mutableStateOf("") }
+    var showMessage by remember {
+        mutableStateOf(false)
+    }
 
     Scaffold (
         topBar = {
@@ -92,7 +96,7 @@ fun DesingMenuSetting(navController: NavController){
                         .fillMaxWidth()
                         .wrapContentWidth(Alignment.CenterHorizontally)
                 ){
-                    //Boton Personal
+                    //Boton Agregar
                     TextButton(
                         onClick = { navController.navigate(AppScreens.NewFood.route)},
                         modifier = Modifier
@@ -111,7 +115,7 @@ fun DesingMenuSetting(navController: NavController){
                             )
                         }
                     }
-                    //Boton Menu
+                    //Boton Editar
                     TextButton(
                         onClick = {  },
                         modifier = Modifier
@@ -130,9 +134,9 @@ fun DesingMenuSetting(navController: NavController){
                             )
                         }
                     }
-                    //Boton Salir
+                    //Boton Eliminar
                     TextButton(
-                        onClick = { navController.navigate(AppScreens.Menu.route) },
+                        onClick = { showMessage  = true},
                         modifier = Modifier
                             .padding(5.dp)
                             .height(48.dp)
@@ -198,7 +202,38 @@ fun DesingMenuSetting(navController: NavController){
                     }
                 )
             }
-
+            if(showMessage){
+                AlertDialog(
+                    onDismissRequest = {
+                        // Manejar el evento de descartar
+                        showMessage = false
+                    },
+                    title = {
+                        Text(text = "Eliminacion de comida")
+                    },
+                    text = {
+                        Text(text = "Aceptar o descarta la eliminacion de la comida")
+                    },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                showMessage = false
+                            }
+                        ) {
+                            Text("Confirmar")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(
+                            onClick = {
+                                showMessage = false
+                            }
+                        ) {
+                            Text("Descartar")
+                        }
+                    }
+                )
+            }
         }
     }
 }

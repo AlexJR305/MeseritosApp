@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SupervisorAccount
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -66,7 +67,9 @@ fun PersonnelAdjustmentsScreen(navController: NavController){
 fun DesingPersonnelAdjustments(navController: NavController){
     //Variables
     var Search by remember{ mutableStateOf("") }
-
+    var showMessage by remember {
+        mutableStateOf(false)
+    }
     Scaffold (
         topBar = {
             TopAppBar(title = {
@@ -75,7 +78,7 @@ fun DesingPersonnelAdjustments(navController: NavController){
                         Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null)
                     }
                     Text(
-                        text = stringResource(id = R.string.MenuSettingText),
+                        text = stringResource(id = R.string.PersonnelAdjustmentsText),
                         style = MaterialTheme.typography.titleLarge,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(top = 8.dp)
@@ -92,7 +95,7 @@ fun DesingPersonnelAdjustments(navController: NavController){
                         .fillMaxWidth()
                         .wrapContentWidth(Alignment.CenterHorizontally)
                 ){
-                    //Boton Personal
+                    //Boton Agregar
                     TextButton(
                         onClick = { },
                         modifier = Modifier
@@ -111,7 +114,7 @@ fun DesingPersonnelAdjustments(navController: NavController){
                             )
                         }
                     }
-                    //Boton Menu
+                    //Boton Editar
                     TextButton(
                         onClick = {  },
                         modifier = Modifier
@@ -130,9 +133,10 @@ fun DesingPersonnelAdjustments(navController: NavController){
                             )
                         }
                     }
-                    //Boton Salir
+                    //Boton Eliminar
+
                     TextButton(
-                        onClick = { navController.navigate(AppScreens.Menu.route) },
+                        onClick = { showMessage = true },
                         modifier = Modifier
                             .padding(5.dp)
                             .height(48.dp)
@@ -155,7 +159,7 @@ fun DesingPersonnelAdjustments(navController: NavController){
     ){
         Box(
             Modifier
-                .padding(top = 60.dp,start = 5.dp, end = 5.dp)
+                .padding(top = 60.dp, start = 5.dp, end = 5.dp)
                 .fillMaxSize()
         ){
             var headerList = listOf("Nombre","RFC","Tel","Puesto")
@@ -198,7 +202,38 @@ fun DesingPersonnelAdjustments(navController: NavController){
                     }
                 )
             }
-
+            if(showMessage){
+                AlertDialog(
+                    onDismissRequest = {
+                        // Manejar el evento de descartar
+                        showMessage = false
+                    },
+                    title = {
+                        Text(text = "Eliminacion de empleado")
+                    },
+                    text = {
+                        Text(text = "Aceptar o descarta la eliminacion del empleado")
+                    },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                showMessage = false
+                            }
+                        ) {
+                            Text("Confirmar")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(
+                            onClick = {
+                                showMessage = false
+                            }
+                        ) {
+                            Text("Descartar")
+                        }
+                    }
+                )
+            }
         }
     }
 }
