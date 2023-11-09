@@ -7,7 +7,7 @@
     <string name="Menu">Menu</string>
     <string name="Search">Buscar</string>
     <string name="Checked">Cuenta</string>
-    <string name="Order">Ordenar</string>
+    <string name="Order">Orden</string>
     <string name="Personal">Personal</string>
     //DetailsFood
     <string name="DetailsFood">Detalles de la comida</string>
@@ -40,4 +40,13 @@
     <string name="AddFood">Nombre</string>
     <string name="PriceFood">Precio</string>
     <string name="DescriptionNewFood">Descripcion de la comida</string>
+    //NewPerssonel
+    <string name="NewPersonnel">Empleado</string>
+    <string name="NameNewPersonnel">Nombre</string>
+    <string name="LastNameNewPersonnel">Apellido</string>
+    <string name="RfcNewPersonnel">RFC</string>
+    <string name="PhoneNewPersonnel">Telefono</string>
+    <string name="JobNewPersonnel">Puesto a desempeñar</string>
+    <string name="UserNewPersonnel">usuario</string>
+    <string name="PassNewPersonnel">Contraseña</string>
 </resources>

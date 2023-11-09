@@ -15,6 +15,7 @@ import com.example.appmeseritos.screens.ListToOrders
 import com.example.appmeseritos.screens.Menu
 import com.example.appmeseritos.screens.MenuSettingScreen
 import com.example.appmeseritos.screens.NewFood
+import com.example.appmeseritos.screens.NewPerssonel
 import com.example.appmeseritos.screens.PersonnelAdjustmentsScreen
 
 
@@ -52,6 +53,9 @@ fun AppVavigation(){
         }
         composable(route = AppScreens.NewFood.route){
             NewFood(navController)
+        }
+        composable(route = AppScreens.AddPersonnel.route){
+            NewPerssonel(navController)
         }
     }
 }

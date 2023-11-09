@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +12,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -55,16 +59,30 @@ fun DesingBill(navController: NavController){
     Scaffold (
         topBar = {
             TopAppBar(title = {
-                Row {
-                    IconButton(onClick = { navController.navigate(AppScreens.Menu.route) }) {
-                        Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null)
+                BoxWithConstraints {
+                    //Adaptacion del tamano de pantallas
+                    val WidthScreenTittle: Int
+                    val WidthScreenBack: Int
+                    if (maxWidth < 400.dp) {
+                        WidthScreenTittle = 25
+                        WidthScreenBack = 45
+                    } else {
+                        WidthScreenTittle = 38
+                        WidthScreenBack = 140
                     }
-                    Text(
-                        text = stringResource(id = R.string.Bill),
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
+                    Row {
+                        IconButton(onClick = { navController.navigate(AppScreens.Menu.route)} ) {
+                            Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null,
+                                modifier = Modifier.size(WidthScreenBack.dp))
+                        }
+                        Text(
+                            text = stringResource(id = R.string.Bill),
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(top = 6.dp),
+                            fontSize = WidthScreenTittle.sp
+                        )
+                    }
                 }
             })
         },
@@ -72,48 +90,67 @@ fun DesingBill(navController: NavController){
             BottomAppBar(
                 containerColor = MaterialTheme.colorScheme.primary
             ){
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentWidth(Alignment.CenterHorizontally)
-                ) {
-                    //Boton para pagar
-                    TextButton(
-                        onClick = {  },
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .height(48.dp)
-                            .background(Color.Black)
-                    ) {
-                        Row(
-                        ) {
-                            Icon(imageVector = Icons.Filled.Payment, contentDescription = null)
-                            Text(
-                                text = stringResource(id = R.string.Pay),
-                                style = MaterialTheme.typography.titleLarge,
-                                color = Color.White, // Color del texto
-                                fontSize = 18.sp,
-                            )
-                        }
+                BoxWithConstraints {
+                    var WithScreen: Int
+                    var WidthScreenTextButton: Int
+                    var WidthScreenIcon : Int
+                    if(maxWidth < 400.dp){
+                        WithScreen = 130
+                        WidthScreenTextButton = 17
+                        WidthScreenIcon = 27
                     }
-
-                    //Boton para cancelar
-                    TextButton(
-                        onClick = {  navController.navigate(AppScreens.Menu.route)  },
+                    else {
+                        WithScreen = 300
+                        WidthScreenTextButton = 27
+                        WidthScreenIcon = 34
+                    }
+                    Row(
                         modifier = Modifier
-                            .padding(8.dp)
-                            .height(48.dp)
-                            .background(Color.Black)
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.CenterHorizontally)
                     ) {
-                        Row(
+                        //Boton para pagar
+                        TextButton(
+                            onClick = {  },
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .height(48.dp)
+                                .width(WithScreen.dp)
+                                .background(Color.Black)
                         ) {
-                            Icon(imageVector = Icons.Filled.Cancel, contentDescription = null)
-                            Text(
-                                text = stringResource(id = R.string.CancelBill),
-                                style = MaterialTheme.typography.titleLarge,
-                                color = Color.White, // Color del texto
-                                fontSize = 18.sp,
-                            )
+                            Row(
+                            ) {
+                                Icon(imageVector = Icons.Filled.Payment, contentDescription = null,
+                                    modifier = Modifier.size(WidthScreenIcon.dp))
+                                Text(
+                                    text = stringResource(id = R.string.Pay),
+                                    style = MaterialTheme.typography.titleLarge,
+                                    color = Color.White, // Color del texto
+                                    fontSize = WidthScreenTextButton.sp,
+                                )
+                            }
+                        }
+
+                        //Boton para cancelar
+                        TextButton(
+                            onClick = {  navController.navigate(AppScreens.Menu.route)  },
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .height(48.dp)
+                                .width(WithScreen.dp)
+                                .background(Color.Black)
+                        ) {
+                            Row(
+                            ) {
+                                Icon(imageVector = Icons.Filled.Cancel, contentDescription = null,
+                                    modifier = Modifier.size(WidthScreenIcon.dp))
+                                Text(
+                                    text = stringResource(id = R.string.CancelBill),
+                                    style = MaterialTheme.typography.titleLarge,
+                                    color = Color.White, // Color del texto
+                                    fontSize = WidthScreenTextButton.sp,
+                                )
+                            }
                         }
                     }
                 }
@@ -136,7 +173,8 @@ fun DesingBill(navController: NavController){
                     content = {
                         items(list.size){ index ->
                             Card (
-                                modifier = Modifier.border(1.dp, Color.Black)
+                                modifier = Modifier
+                                    .border(1.dp, Color.Black)
                                     .fillMaxWidth()
                                     .padding(start = 3.dp)
                             ){
@@ -149,17 +187,22 @@ fun DesingBill(navController: NavController){
                         }
                     }
                 )
-                Spacer(modifier = Modifier.height(15.dp))
-                Column (
-                    Modifier.fillMaxWidth()
-                        .wrapContentWidth(Alignment.End)
-                        .padding(end = 30.dp)
-                ){
-                    Text(text = stringResource(id = R.string.Total) + total,
-                        style = MaterialTheme.typography.bodyLarge)
+                LazyColumn{
+                    item{
+                        Spacer(modifier = Modifier.height(15.dp))
+                        Column (
+                            Modifier
+                                .fillMaxWidth()
+                                .wrapContentWidth(Alignment.End)
+                                .padding(end = 30.dp)
+                        ){
+                            Text(text = stringResource(id = R.string.Total) + total,
+                                style = MaterialTheme.typography.bodyLarge)
 
-                    Text(text = stringResource(id = R.string.Iva) + iva,
-                        style = MaterialTheme.typography.bodyLarge)
+                            Text(text = stringResource(id = R.string.Iva) + iva,
+                                style = MaterialTheme.typography.bodyLarge)
+                        }
+                    }
                 }
             }
         }

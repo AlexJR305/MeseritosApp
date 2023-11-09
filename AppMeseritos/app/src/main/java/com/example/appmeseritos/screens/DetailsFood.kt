@@ -6,6 +6,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,8 +15,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -47,9 +50,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.appmeseritos.R
 import com.example.appmeseritos.navigation.AppScreens
+import com.example.appmeseritos.ui.theme.MainViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,136 +62,191 @@ import com.example.appmeseritos.navigation.AppScreens
 fun desingDetailsFood(navController: NavController){
     //Variables
     var Num by remember{ mutableStateOf("") }
-    var DescriptionFood by remember { mutableStateOf("") }
-
-    Scaffold (
-        topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                ),
-                title = {
-                    Row {
-                        IconButton(onClick = { navController.navigate(AppScreens.Menu.route) }) {
-                            Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null)
-                        }
-                        Text(
-                            text = stringResource(id = R.string.DetailsFood),
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
-                        )
-                    }
-            })
-        },
-        bottomBar = {
-            //Deben ir los iconos de logo de empresa y app
-        },
-        modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
-    ){
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 80.dp)
-            .wrapContentSize(Alignment.Center)){
-            Column (
-                Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                Image(painter = painterResource(id = R.drawable.captura), contentDescription = "",
-                    modifier = Modifier.size(200.dp))
-                Spacer(modifier = Modifier.height(20.dp))
-                Text(text = stringResource(id = R.string.DescriptionFood),
-                    style = MaterialTheme.typography.titleLarge)
-                Spacer(modifier = Modifier.height(20.dp))
-                //Seccion de cantidad
-                Text(text = stringResource(id = R.string.HowMany),
-                    style = MaterialTheme.typography.titleLarge)
-                Spacer(modifier = Modifier.height(20.dp))
-                TextField(
-                    value = Num,
-                    onValueChange = {
-                        // Filtrar solo números
-                        val newText = it.filter { it.isDigit() }
-                        Num = newText
-                    },
-                    label = { Text(text = stringResource(id = R.string.Amount))},
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Number
+    val myViewModel = viewModel<MainViewModel>()
+    BoxWithConstraints {
+        //Adaptacion del tamano de pantallas
+        val WidthScreenButton: Int
+        val WidthScreenTextFied: Int
+        val WidthScreenText: Int
+        val WidthScreenPicture: Int
+        val WidthScreenTittle: Int
+        val WidthScreenBack: Int
+        var WidthScreenTextButton: Int
+        var WidthScreenIcon : Int
+        if (maxWidth < 400.dp) {
+            WidthScreenButton = 130
+            WidthScreenTextFied = 260
+            WidthScreenText = 30
+            WidthScreenPicture = 200
+            WidthScreenTittle = 25
+            WidthScreenBack = 45
+            WidthScreenTextButton = 17
+            WidthScreenIcon = 24
+        } else {
+            WidthScreenButton = 260
+            WidthScreenTextFied = 500
+            WidthScreenText = 60
+            WidthScreenPicture = 300
+            WidthScreenTittle = 38
+            WidthScreenBack = 140
+            WidthScreenTextButton = 27
+            WidthScreenIcon = 34
+        }
+        Scaffold (
+            topBar = {
+                TopAppBar(
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
                     ),
-                    textStyle = TextStyle(fontSize = 24.sp)
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                //Seccion de datos extras
-                Text(text = stringResource(id = R.string.DetailsExtra),
-                    style = MaterialTheme.typography.bodyLarge)
-                Spacer(modifier = Modifier.height(20.dp))
-                TextField(
-                    value = DescriptionFood,
-                    onValueChange = {
-                        DescriptionFood = it
-                    },
-                    label = { Text(text = stringResource(id = R.string.Preferences))},
-                    maxLines = 4
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                //botones
-                //Boton Confirmar
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentWidth(Alignment.CenterHorizontally)
-                ){
-                    //Boton de acceso para chef o admin
-                    TextButton(
-                        onClick = {  },
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .height(48.dp)
-                            .background(Color.Black)
-                    ) {
-                        Row(
-                        ) {
-                            Icon(
-                                imageVector = Icons.Filled.RestaurantMenu,
-                                contentDescription = null
-                            )
+                    title = {
+                        Row {
+                            IconButton(onClick = { navController.navigate(AppScreens.Menu.route) }) {
+                                Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null,
+                                    modifier = Modifier.size(WidthScreenBack.dp))
+                            }
                             Text(
-                                text = "Confirmar",
+                                text = stringResource(id = R.string.DetailsFood),
+                                textAlign = TextAlign.Center,
                                 style = MaterialTheme.typography.titleLarge,
-                                color = Color.White, // Color del texto
-                                fontSize = 18.sp,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 8.dp),
+                                fontSize = WidthScreenTittle.sp
                             )
+                        }
+                    })
+            },
+            bottomBar = {
+                //Deben ir los iconos de logo de empresa y app
+            },
+            modifier = Modifier
+                .fillMaxSize()
+                .wrapContentSize(Alignment.Center)
+        ){
+
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 80.dp)
+                    .wrapContentSize(Alignment.Center)){
+                    LazyColumn (
+                        Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ){
+                        item{
+                            Image(painter = painterResource(id = R.drawable.captura), contentDescription = "",
+                                modifier = Modifier.size(WidthScreenPicture.dp))
+                            Spacer(modifier = Modifier.height(20.dp))
+                            Text(text = stringResource(id = R.string.DescriptionFood),
+                                style = MaterialTheme.typography.titleLarge,
+                                fontSize = WidthScreenText.sp)
+                            Spacer(modifier = Modifier.height(20.dp))
+                        }
+
+                        item{
+                            //Seccion de cantidad
+                            Text(text = stringResource(id = R.string.HowMany),
+                                style = MaterialTheme.typography.titleLarge,
+                                fontSize = WidthScreenText.sp)
+                            Spacer(modifier = Modifier.height(20.dp))
+                            TextField(
+                                value = myViewModel.howManyListToOrder.value,
+                                onValueChange = {
+                                    // Filtrar solo números
+                                    val newText = it.filter { it.isDigit() }
+                                    Num = myViewModel.sethowManyListToOrder(newText).toString()
+                                },
+                                label = { Text(text = stringResource(id = R.string.Amount))},
+                                keyboardOptions = KeyboardOptions.Default.copy(
+                                    keyboardType = KeyboardType.Number
+                                ),
+                                textStyle = TextStyle(fontSize = 24.sp),
+                                modifier = Modifier.width(WidthScreenTextFied.dp)
+                            )
+                            Spacer(modifier = Modifier.height(20.dp))
+                        }
+                        item{
+                            //Seccion de datos extras
+                            Text(text = stringResource(id = R.string.DetailsExtra),
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontSize = WidthScreenText.sp)
+                            Spacer(modifier = Modifier.height(20.dp))
+                            TextField(
+                                value = myViewModel.extraDetailsListToOrder.value,
+                                onValueChange = {
+                                        DescriptionFood ->
+                                    myViewModel.setextraDetailsListToOrder(DescriptionFood)
+                                },
+                                label = { Text(text = stringResource(id = R.string.Preferences))},
+                                maxLines = 4,
+                                modifier = Modifier.width(WidthScreenTextFied.dp)
+                            )
+                            Spacer(modifier = Modifier.height(20.dp))
+                        }
+                        item{
+                            //botones
+                            //Boton Confirmar
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentWidth(Alignment.CenterHorizontally)
+                            ){
+                                //Boton de acceso para chef o admin
+                                TextButton(
+                                    onClick = {  },
+                                    modifier = Modifier
+                                        .padding(8.dp)
+                                        .height(48.dp)
+                                        .width(WidthScreenButton.dp)
+                                        .background(Color.Black)
+                                ) {
+                                    Row(
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Filled.RestaurantMenu,
+                                            contentDescription = null,
+                                            modifier = Modifier.size(WidthScreenIcon.dp)
+                                        )
+                                        Text(
+                                            text = "Confirmar",
+                                            style = MaterialTheme.typography.titleLarge,
+                                            color = Color.White, // Color del texto
+                                            fontSize = WidthScreenTextButton.sp,
+                                        )
+                                    }
+                                }
+
+                                //Boton de cancelacion
+                                TextButton(
+                                    onClick = { navController.navigate(AppScreens.Menu.route) },
+                                    modifier = Modifier
+                                        .padding(8.dp)
+                                        .height(48.dp)
+                                        .width(WidthScreenButton.dp)
+                                        .background(Color.Black)
+                                ) {
+                                    Row(
+                                    ) {
+                                        Icon(imageVector = Icons.Filled.Cancel, contentDescription = null,
+                                            modifier = Modifier.size(WidthScreenIcon.dp))
+                                        Text(
+                                            text = "Cancelar",
+                                            style = MaterialTheme.typography.titleLarge,
+                                            color = Color.White, // Color del texto
+                                            fontSize = WidthScreenTextButton.sp,
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
 
-                    //Boton de cancelacion
-                    TextButton(
-                        onClick = {  },
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .height(48.dp)
-                            .background(Color.Black)
-                    ) {
-                        Row(
-                        ) {
-                            Icon(imageVector = Icons.Filled.Cancel, contentDescription = null)
-                            Text(
-                                text = "Cancelar",
-                                style = MaterialTheme.typography.titleLarge,
-                                color = Color.White, // Color del texto
-                                fontSize = 18.sp,
-                            )
-                        }
-                    }
                 }
-            }
 
         }
     }
+
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
