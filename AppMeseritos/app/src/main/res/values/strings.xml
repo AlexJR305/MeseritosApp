@@ -1,4 +1,5 @@
 <resources>
+    //Name App
     <string name="app_name">AppMeseritos</string>
     //Home
     <string name="User">Usuario</string>
