@@ -1,6 +1,6 @@
 <resources>
     //Name App
-    <string name="app_name">AppMeseritos</string>
+    <string name="app_name">Meseritos App</string>
     //Home
     <string name="User">Usuario</string>
     <string name="Password">Contraseña</string>
