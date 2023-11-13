@@ -26,5 +26,4 @@ interface empleadosDao {
 
     @Query("SELECT * from empleados_table ORDER BY nombre ASC")
     fun getAllEmpleeados(): Flow<List<empleados>>
-
 }

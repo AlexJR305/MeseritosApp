@@ -1,23 +1,30 @@
 package com.example.appmeseritos.data.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.appmeseritos.data.database.entities.comida
+import com.example.appmeseritos.data.database.entities.empleados
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface comidaDao {
 
-    @Query("SELECT*FROM Comida_table")
-    suspend fun getAllComida():List<comida>
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(co: comida)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(comidas:List<comida>)
+    @Update
+    suspend fun update(item: comida)
 
-    @Query("DELETE FROM Comida_table WHERE id_Comida = :id")
-    suspend fun deleteById(id: Int)
+    @Delete
+    suspend fun delete(item: comida)
 
-    @Query("SELECT*FROM Comida_table WHERE id_Comida = :id")
-    suspend fun getElementbyId(id: Int): comida
+    @Query("SELECT * from comida_table WHERE id_Comida = :clave")
+    fun getComida(clave: Int): Flow<comida>
+
+    @Query("SELECT * from comida_table ORDER BY nombre ASC")
+    fun getAllComidas(): Flow<List<comida>>
 }

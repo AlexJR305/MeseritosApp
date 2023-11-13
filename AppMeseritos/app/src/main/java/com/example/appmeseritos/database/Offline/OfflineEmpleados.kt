@@ -1,7 +1,8 @@
-package com.example.appmeseritos.database
+package com.example.appmeseritos.database.Offline
 
 import com.example.appmeseritos.data.database.dao.empleadosDao
 import com.example.appmeseritos.data.database.entities.empleados
+import com.example.appmeseritos.database.Repository.EmpleadosRepository
 import kotlinx.coroutines.flow.Flow
 
 class OfflineEmpleados(private val empleadoDao: empleadosDao): EmpleadosRepository {

@@ -1,4 +1,4 @@
-package com.example.appmeseritos.database
+package com.example.appmeseritos.database.Repository
 
 import com.example.appmeseritos.data.database.entities.empleados
 import kotlinx.coroutines.flow.Flow
